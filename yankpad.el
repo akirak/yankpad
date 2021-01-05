@@ -681,7 +681,8 @@ Each snippet is a list (NAME TAGS SRC-BLOCKS TEXT)."
 If successful, make `yankpad-category' buffer-local.
 If no major mode category is found, it uses `yankpad-default-category',
 if that is defined in the `yankpad-file'."
-  (when (file-exists-p yankpad-file)
+  (when (and (not (minibufferp))
+             (file-exists-p yankpad-file))
     (let* ((categories (yankpad--categories))
            (category (or (car (member (symbol-name major-mode)
                                       categories))
